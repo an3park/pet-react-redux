@@ -2,7 +2,7 @@ const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = (env = {}) => {
   const isDev = !!env.dev
@@ -21,18 +21,13 @@ module.exports = (env = {}) => {
     'css-loader'
   ]
 
-  const jsLoaders = [{
-    loader: 'babel-loader',
-    options: {
-      presets: ['@babel/preset-env', '@babel/preset-react']
-    }
-  }]
+  const jsLoaders = []
 
   return {
     context: path.resolve(__dirname, 'src'),
     mode: isDev ? 'development' : 'production',
     entry: {
-      index: './index.js'
+      index: './index'
     },
     output: {
       filename: filename('js'),
@@ -40,19 +35,19 @@ module.exports = (env = {}) => {
     },
     resolve: {
       extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
-      alias: {
-        '@': path.resolve(__dirname, 'src')
-      }
+      alias: {}
     },
     devServer: {
       port: 8080,
       hot: isDev
     },
     devtool: isDev ? 'source-map' : false,
-    optimization: isDev ? {} : {
-      minimize: true,
-      minimizer: [new TerserPlugin()],
-    },
+    optimization: isDev
+      ? {}
+      : {
+          minimize: true,
+          minimizer: [new TerserPlugin()]
+        },
     plugins: [
       new HTMLWebpackPlugin({
         template: './index.html'
@@ -65,6 +60,10 @@ module.exports = (env = {}) => {
     module: {
       rules: [
         {
+          test: /\.(woff2?)$/,
+          use: 'file-loader'
+        },
+        {
           test: /\.css$/,
           use: cssLoaders
         },
@@ -75,12 +74,30 @@ module.exports = (env = {}) => {
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          use: jsLoaders
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                presets: ['@babel/preset-env', '@babel/preset-react']
+              }
+            }
+          ]
         },
         {
           test: /\.tsx?$/,
           exclude: /node_modules/,
-          use: [...jsLoaders, 'ts-loader']
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                presets: [
+                  '@babel/preset-env',
+                  '@babel/preset-react',
+                  '@babel/preset-typescript'
+                ]
+              }
+            }
+          ]
         }
       ]
     }
