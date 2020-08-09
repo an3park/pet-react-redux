@@ -15,7 +15,7 @@ rt.get('/', async (req, res) => {
 
 rt.post('/', async (req, res) => {
   try {
-    const firstname = req.query.firstname
+    const { firstname, lastname, email } = req.query
     if (typeof firstname !== 'string') throw 'empty firtsname'
     if (typeof lastname !== 'string') throw 'empty lastname'
     if (typeof email !== 'string') throw 'empty email'

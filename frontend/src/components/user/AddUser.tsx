@@ -1,12 +1,12 @@
-import React, {MouseEvent} from 'react'
+import React, { MouseEvent } from 'react'
 import { useStyles } from './userStyles'
 import { Typography } from '@material-ui/core'
 
 export interface Props {
-  onClick?: (event: MouseEvent) => void 
+  onClick?: (event: MouseEvent) => void
 }
 
-export const AddUser: React.FC<Props> = ({onClick}) => {
+export const AddUser: React.FC<Props> = ({ onClick }) => {
   const classes = useStyles()
 
   return (
