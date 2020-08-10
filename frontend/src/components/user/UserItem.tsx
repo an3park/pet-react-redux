@@ -2,28 +2,38 @@ import React from 'react'
 import { Typography, Avatar, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import { useStyles } from './userStyles'
+import IUser from '@interfaces/User'
 
-export interface Props {
-  firstname: string
-  lastname: string
-  email: string
+interface Filled  {
+  skeleton: false
   index: number
+  user: IUser
 }
 
-export const User: React.FC<Props> = ({ firstname, lastname, email, index }) => {
+interface Skeletoned {
+  skeleton: true
+  user?: null
+  index?: null
+}
+
+export type Props = Filled | Skeletoned
+
+export const User: React.FC<Props> = ({ user, index, skeleton }) => {
   const classes = useStyles()
+  const firstname = user?.firstname || ''
+  const lastname = user?.lastname || ''
+  const email = user?.email || ''
   const avatarText = (firstname.charAt(0) + lastname.charAt(0)).toUpperCase()
-  const loading = !Boolean(firstname + lastname + email)
 
   return (
     <Paper className={classes.root} elevation={3} square>
       <div className={classes.counter}>
         <Typography color="textSecondary" variant="h4">
-          {loading ? '' : `#${index}`}
+          {skeleton ? '' : `#${index}`}
         </Typography>
       </div>
       <div className={classes.avatarWrapper}>
-        {loading ? (
+        {skeleton ? (
           <Skeleton variant="circle">
             <Avatar className={classes.avatar} />
           </Skeleton>
@@ -32,9 +42,9 @@ export const User: React.FC<Props> = ({ firstname, lastname, email, index }) => 
         )}
       </div>
       <div className={classes.names}>
-        <Typography>{loading ? <Skeleton /> : `${firstname} ${lastname}`}</Typography>
+        <Typography>{skeleton ? <Skeleton /> : `${firstname} ${lastname}`}</Typography>
         <Typography variant="caption" color="textSecondary" className={classes.email}>
-          {loading ? <Skeleton /> : email}
+          {skeleton ? <Skeleton /> : email}
         </Typography>
       </div>
     </Paper>

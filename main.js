@@ -3,6 +3,11 @@ const mongoose = require('mongoose')
 
 const app = express()
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', '*')
+  next()
+})
 app.use(express.static('frontend/dist'))
 app.use('/api/user', require('./api/user'))
 

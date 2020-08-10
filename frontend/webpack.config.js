@@ -21,8 +21,6 @@ module.exports = (env = {}) => {
     'css-loader'
   ]
 
-  const jsLoaders = []
-
   return {
     context: path.resolve(__dirname, 'src'),
     mode: isDev ? 'development' : 'production',
@@ -35,7 +33,9 @@ module.exports = (env = {}) => {
     },
     resolve: {
       extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
-      alias: {}
+      alias: {
+        '@interfaces': path.resolve(__dirname, '..', 'interfaces')
+      }
     },
     devServer: {
       port: 8080,
@@ -78,7 +78,11 @@ module.exports = (env = {}) => {
             {
               loader: 'babel-loader',
               options: {
-                presets: ['@babel/preset-env', '@babel/preset-react']
+                presets: [
+                  '@babel/preset-env',
+                  '@babel/preset-react'
+                ],
+                plugins: ['@babel/plugin-transform-runtime']
               }
             }
           ]
@@ -94,7 +98,8 @@ module.exports = (env = {}) => {
                   '@babel/preset-env',
                   '@babel/preset-react',
                   '@babel/preset-typescript'
-                ]
+                ],
+                plugins: ['@babel/plugin-transform-runtime']
               }
             }
           ]
