@@ -1,7 +1,6 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = (env = {}) => {
@@ -11,13 +10,7 @@ module.exports = (env = {}) => {
   const filename = ext => (isDev ? `[name].${ext}` : `[hash].${ext}`)
 
   const cssLoaders = [
-    {
-      loader: MiniCssExtractPlugin.loader,
-      options: {
-        hmr: isDev,
-        reloadAll: true
-      }
-    },
+    'style-loader',
     'css-loader'
   ]
 
@@ -52,10 +45,7 @@ module.exports = (env = {}) => {
       new HTMLWebpackPlugin({
         template: './index.html'
       }),
-      new CleanWebpackPlugin(),
-      new MiniCssExtractPlugin({
-        filename: filename('css')
-      })
+      new CleanWebpackPlugin()
     ],
     module: {
       rules: [

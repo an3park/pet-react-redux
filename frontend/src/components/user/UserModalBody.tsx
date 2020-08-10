@@ -5,22 +5,19 @@ import {
   makeStyles,
   Theme,
   createStyles,
-  Button
+  Button,
+  Typography
 } from '@material-ui/core'
 import IUser from '@interfaces/User'
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     root: {
-      position: 'absolute',
-      marginLeft: '50%',
-      marginTop: '50%',
-      transform: 'translate(-50%, -50%)',
-      padding: '30px',
+      padding: theme.spacing(4),
       border: '4px solid #aaa'
     },
     textFilelds: {
-      margin: '5px',
+      margin: theme.spacing(1),
       width: '100%'
     },
     form: {
@@ -49,7 +46,7 @@ export type Props = {
   onSubmit: (event: IUser) => void
 }
 
-export const CreateUserModalBody: React.FC<Props> = ({ onSubmit: externOnSubmit }) => {
+export const UserModalBody: React.FC<Props> = ({ onSubmit: externOnSubmit }) => {
   const classes = useStyles()
 
   const [form, setForm] = useState<formState>({
@@ -91,6 +88,7 @@ export const CreateUserModalBody: React.FC<Props> = ({ onSubmit: externOnSubmit 
 
   return (
     <Paper className={classes.root}>
+      <Typography variant="h6">Create user</Typography>
       <form onSubmit={onSubmit} className={classes.form}>
         <TextField
           className={classes.textFilelds}

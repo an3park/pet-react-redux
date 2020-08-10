@@ -4,7 +4,13 @@ import { Container, Grid, Modal } from '@material-ui/core'
 import IUser from '@interfaces/User'
 import { AddUserButton } from './components/user/AddUserButton'
 import { fetchUsers, pushUser } from './ajax'
-import { CreateUserModalBody } from './components/user/createUserModalBody'
+import { UserModalBody } from './components/user/UserModalBody'
+
+const flexCenter = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
+}
 
 export const App: React.FC = () => {
   const [loading, setLoading] = useState(true)
@@ -47,8 +53,8 @@ export const App: React.FC = () => {
             <AddUserButton onClick={() => setModalOpen(true)} />
           </Grid>
         )}
-        <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-          <CreateUserModalBody onSubmit={onSubmit} />
+        <Modal style={flexCenter} open={modalOpen} onClose={() => setModalOpen(false)}>
+          <UserModalBody onSubmit={onSubmit} />
         </Modal>
       </Grid>
     </Container>
