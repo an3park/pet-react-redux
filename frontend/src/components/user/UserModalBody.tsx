@@ -43,10 +43,10 @@ type formState = {
 }
 
 export type Props = {
-  onSubmit: (event: IUser) => void
+  onSave: (event: IUser) => void
 }
 
-export const UserModalBody: React.FC<Props> = ({ onSubmit: externOnSubmit }) => {
+export const UserModalBody: React.FC<Props> = ({ onSave }) => {
   const classes = useStyles()
 
   const [form, setForm] = useState<formState>({
@@ -77,8 +77,8 @@ export const UserModalBody: React.FC<Props> = ({ onSubmit: externOnSubmit }) => 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setValidate(true)
-    if (externOnSubmit && Object.values(form).every(e => e.valid)) {
-      externOnSubmit({
+    if (onSave && Object.values(form).every(e => e.valid)) {
+      onSave({
         firstname: form.firstname.value,
         lastname: form.lastname.value,
         email: form.email.value

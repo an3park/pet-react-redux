@@ -44,9 +44,7 @@ export const useStyles = makeStyles((theme: Theme) => {
       justifyContent: 'center',
       borderWidth: 3,
       borderStyle: 'dashed',
-      borderColor: theme.palette.text.secondary,
-      cursor: 'pointer',
-      userSelect: 'none'
+      borderColor: theme.palette.text.secondary
     }
   })
 })

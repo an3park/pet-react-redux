@@ -24,7 +24,7 @@ export const App: React.FC = () => {
     })
   }, [])
 
-  const onSubmit = async (newUser: IUser) => {
+  const onSave = async (newUser: IUser) => {
     try {
       const responce = await pushUser(newUser)
       setUsers(oldState => [...oldState, responce as IUser])
@@ -48,15 +48,17 @@ export const App: React.FC = () => {
                 <User skeleton={false} user={user} index={idx + 1} />
               </Grid>
             ))}
-        {loading ? null : (
+        {loading ? (
+          null
+        ) : (
           <Grid item>
             <AddUserButton onClick={() => setModalOpen(true)} />
           </Grid>
         )}
-        <Modal style={flexCenter} open={modalOpen} onClose={() => setModalOpen(false)}>
-          <UserModalBody onSubmit={onSubmit} />
-        </Modal>
       </Grid>
+      <Modal style={flexCenter} open={modalOpen} onClose={() => setModalOpen(false)}>
+        <><UserModalBody onSave={onSave} /></>
+      </Modal>
     </Container>
   )
 }
