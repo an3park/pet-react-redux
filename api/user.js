@@ -43,7 +43,7 @@ rt.post('/', jsonBodyParser, async (req, res) => {
   } catch (err) {
     if (err.message) {
       res.status(500).json({ message: 'Internal server error' })
-      console.error(err)
+      console.error(err.message || err)
     } else {
       res.status(400).json({ message: err })
     }

@@ -1,16 +1,20 @@
 import { render } from 'react-dom'
 import React from 'react'
 import { ThemeProvider, CssBaseline } from '@material-ui/core'
-import { theme } from './theme'
-import { App } from './App'
-
+import { Provider } from 'react-redux'
 import 'fontsource-roboto'
 
-render(
+import { theme } from './theme'
+import App from './App'
+import { store } from './store/store'
+
+const app = (
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <App />
-  </ThemeProvider>,
-
-  document.getElementById('app')
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ThemeProvider>
 )
+
+render(app, document.getElementById('app'))
