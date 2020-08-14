@@ -10,7 +10,7 @@ import {
   Modal,
   ModalProps
 } from '@material-ui/core'
-import IUser from '@interfaces/User'
+import IUser from '../../interfaces/User'
 
 const useStyles = makeStyles((theme: Theme) => {
   return createStyles({

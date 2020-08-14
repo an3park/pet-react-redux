@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography, Avatar, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import { useStyles } from './userStyles'
-import IUser from '@interfaces/User'
+import IUser from '../../interfaces/User'
 
 interface Filled  {
   skeleton: false

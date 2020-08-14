@@ -3,15 +3,10 @@ const mongoose = require('mongoose')
 
 const app = express()
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', '*')
-  next()
-})
-app.use(express.static('frontend/dist'))
+app.use(express.static('frontend/build'))
 app.use('/api/user', require('./api/user'))
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8080
 const MONGO_URI = process.env.MONGOURI || 'mongodb://127.0.0.1/test'
 
 !(async () => {

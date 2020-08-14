@@ -1,56 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import { User } from './components/user/UserItem'
 import { Container, Grid } from '@material-ui/core'
-import IUser from '@interfaces/User'
+import IUser from './interfaces/User'
 import { AddUserButton } from './components/user/AddUserButton'
 import { UserModal } from './components/user/UserModal'
-import { fetchUsersAction } from './store/actions'
-import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux'
-import { State } from './store/types'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from './store/rootReducer'
+import { fetchUsersAction, saveNewUser } from './store/usersActions'
 
-interface ownProps {}
-
-interface stateProps {
-  users: IUser[]
-}
-
-interface dispatchProps {
-  fetchUsers: () => void
-}
-
-type Props = stateProps & ownProps & dispatchProps
-
-const mapState: MapStateToProps<stateProps, ownProps, State> = state => {
-  return { users: state.users }
-}
-
-const mapDispatch: MapDispatchToProps<dispatchProps, ownProps> = dispatch => {
-  return { fetchUsers: () => dispatch(fetchUsersAction() as any) }
-}
-
-const connector = connect(mapState, mapDispatch)
-
-const App: React.FC<Props> = ({ users, fetchUsers }) => {
-  const [loading, setLoading] = useState(false)
+const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
-  // const [users, setUsers] = useState<IUser[]>([])
+  const users = useSelector<RootState, IUser[]>(state => state.users.users)
+  const loading = useSelector<RootState, boolean>(state => state.users.loading)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    fetchUsers()
+    dispatch(fetchUsersAction())
   }, [])
 
-  useEffect(() => {
-    setTimeout(() => {}, 1000)
-  }, [modalOpen])
-
-  const onSave = async (newUser: IUser) => {
-    // try {
-    //   const responce = await pushUser(newUser)
-    //   setUsers(oldState => [...oldState, responce as IUser])
-    //   setModalOpen(false)
-    // } catch (err) {
-    //   console.error(err)
-    // }
+  const onSave = (newUser: IUser) => {
+    dispatch(saveNewUser(newUser))
+    setModalOpen(false)
   }
 
   return (
@@ -78,4 +48,4 @@ const App: React.FC<Props> = ({ users, fetchUsers }) => {
   )
 }
 
-export default connector(App)
+export default App
