@@ -8,7 +8,8 @@ export const useStyles = makeStyles((theme: Theme) => {
       alignItems: 'center',
       width: theme.spacing(42),
       height: theme.spacing(11),
-      paddingRight: theme.spacing(1)
+      paddingRight: theme.spacing(1),
+      position: 'relative'
     },
     counter: {
       display: 'flex',
@@ -45,6 +46,14 @@ export const useStyles = makeStyles((theme: Theme) => {
       borderWidth: 3,
       borderStyle: 'dashed',
       borderColor: theme.palette.text.secondary
+    },
+    cross: {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      minWidth: 'auto',
+      padding: theme.spacing(0.8, 1.8),
+      fontSize: '1.2rem'
     }
   })
 })

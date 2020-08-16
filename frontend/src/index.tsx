@@ -1,5 +1,5 @@
-import { render } from 'react-dom'
 import React from 'react'
+import { render } from 'react-dom'
 import { ThemeProvider, CssBaseline } from '@material-ui/core'
 import { Provider } from 'react-redux'
 import 'fontsource-roboto'

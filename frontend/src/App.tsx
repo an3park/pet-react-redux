@@ -6,7 +6,7 @@ import { AddUserButton } from './components/user/AddUserButton'
 import { UserModal } from './components/user/UserModal'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from './store/rootReducer'
-import { fetchUsersAction, saveNewUser } from './store/usersActions'
+import { fetchUsersAction, saveNewUser, deleteUser } from './store/usersActions'
 
 const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -23,6 +23,10 @@ const App: React.FC = () => {
     setModalOpen(false)
   }
 
+  const onUserClose = (userId: string) => {
+    dispatch(deleteUser(userId))
+  }
+
   return (
     <Container>
       <Grid container spacing={2}>
@@ -34,7 +38,12 @@ const App: React.FC = () => {
             ))
           : users.map((user, idx) => (
               <Grid key={user.email} item>
-                <User skeleton={false} user={user} index={idx + 1} />
+                <User
+                  onClose={onUserClose}
+                  skeleton={false}
+                  user={user}
+                  index={idx + 1}
+                />
               </Grid>
             ))}
         {!loading && (

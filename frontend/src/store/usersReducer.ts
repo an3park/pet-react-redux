@@ -20,7 +20,12 @@ interface saveNewUser {
   payload: IUser
 }
 
-export type usersActions = fetchUsersAction | setLoading | saveNewUser
+interface deleteUser {
+  type: 'USERS/DELETE'
+  payload: string
+}
+
+export type usersActions = fetchUsersAction | setLoading | saveNewUser | deleteUser
 
 type usersState = typeof initialState
 
@@ -31,7 +36,10 @@ export function usersReducer(state = initialState, action: usersActions): usersS
     case 'USERS/LOADING':
       return { ...state, loading: action.payload }
     case 'USERS/ADD':
-      return {...state, users: [...state.users, action.payload]}
+      return { ...state, users: [...state.users, action.payload] }
+    case 'USERS/DELETE':
+      const users = state.users.filter(u => u._id !== action.payload)
+      return { ...state, users }
     default:
       return state
   }

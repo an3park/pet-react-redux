@@ -16,20 +16,40 @@ export function setLoading(loading: boolean): RootActions {
 
 export function fetchUsersAction(): AppThunk<void> {
   return async dispatch => {
-    dispatch(setLoading(true))
-    const users: IUser[] = await ky.get('/api/user').json()
-    dispatch({ type: 'USERS/FETCH', payload: users })
-    dispatch(setLoading(false))
+    try {
+      dispatch(setLoading(true))
+      const users: IUser[] = await ky.get('/api/user').json()
+      dispatch({ type: 'USERS/FETCH', payload: users })
+      dispatch(setLoading(false))
+    } catch (err) {
+      console.error(err.message || err)
+    }
   }
 }
 
 export function saveNewUser(user: IUser): AppThunk {
   return async dispatch => {
-    const resUser: IUser = await ky
-      .post('/api/user', {
-        json: user
-      })
-      .json()
-    dispatch({ type: 'USERS/ADD', payload: resUser })
+    try {
+      const resUser: IUser = await ky
+        .post('/api/user', {
+          json: user
+        })
+        .json()
+      dispatch({ type: 'USERS/ADD', payload: resUser })
+    } catch (err) {
+      console.error(err.message || err)
+    }
+  }
+}
+
+export function deleteUser(userId: string): AppThunk {
+  return async dispatch => {
+    try {
+      const searchParams = { id: userId }
+      await ky.delete('/api/user', { searchParams }).json()
+      dispatch({ type: 'USERS/DELETE', payload: userId })
+    } catch (err) {
+      console.error(err.message || err)
+    }
   }
 }
